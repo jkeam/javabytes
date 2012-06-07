@@ -8,25 +8,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    	<script type="text/javascript">
-          function submitCode() {
-   	    var jsonText = JSON.stringify({"code":"System.out.println(\"hi\");"});
-            $.ajax({
- 		type: 'POST',
-		url: '/',
-		dataType: 'json',
-		contentType: 'application/json; charset=utf-8',
-		data: jsonText, 
-		success: function(json) {
-		  console.log(json.code)
-		  alert(json.code)
-		},
-		failure: function(xhr, textStatus, errorThrown) {
-		  window.alert('failure: ');
-		}
-	    });
-          }
-        </script>
+        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
     </head>
     <body>
         @content
