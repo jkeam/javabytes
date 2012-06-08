@@ -1,29 +1,48 @@
 @(messages: String)
 
 @main("Javabytes") {
-
-    <a href="#" onClick="submitCode(); return false;">Submit</a>
-
     <!--
      message was Array[String]
     @for( message <- messages) {
       @message<br/>
     }
     -->
+</head>
+<body>
 
-  <div id="nav">
+<div class="banner">
+Javabytes
+</div>
 
+<div id="container">
+
+<div class="intro">
+Welcome to Javabytes, a dissassembler for your java code.  Inspired by a project by Matt Godbold called <a href="https://github.com/mattgodbolt/gcc-explorer">GCC Explorer</a>. 
+<div class="messages">
+
+</div>
+
+<div class="action">
+</div>
+<div id="main">
+  <div class="console-container">
+    Java Code
+    <div class="console">
+      <textarea id="inputTextArea">System.out.println("hi");</textarea>
+    </div>
+    <a href="#" class="btn" onClick="submitCode(); return false;">Compile</a>
   </div>
-  <div id="header">
-    <div id="intro">
-    </div>
-    <div id="errors">
-    </div>
-  </div>
-  <div id="main>
-    <div id="input">
-    </div>
-    <div id="output">
+  <div class="console-container">
+    Dissassembled Code
+    <div class="console">
+      <textarea id="outputTextArea"></textarea>
     </div>
   </div>
+</div>
+
+</div>
+
+</body>
+</html>
+
 }

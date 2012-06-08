@@ -15,3 +15,9 @@ function submitCode() {
                 }
             });
           }
+
+function onReady() {
+    var inputMirror = CodeMirror.fromTextArea($("#inputTextArea").get(0), {lineNumbers:true});
+    var outputMirror = CodeMirror.fromTextArea($("#outputTextArea").get(0), {lineNumbers:true, readOnly :true});
+}
+
