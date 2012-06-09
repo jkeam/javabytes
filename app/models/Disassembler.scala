@@ -45,7 +45,7 @@ class Disassembler {
     decomp = decomp.replaceAll("\t", " ")
 
     //if no errors
-      //run dissassembler
+      //run disassembler
     //else
       //take output from compiler and send it back
 
