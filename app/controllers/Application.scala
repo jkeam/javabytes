@@ -15,8 +15,9 @@ object Application extends Controller {
   def submitCode = Action(parse.json) { request =>
     (request.body \ "code").asOpt[String].map { code =>
       val helper = new Disassembler()
-      val diss = helper.disassemble(code)
-      Ok("{\"code\":\"" + diss + "\"}")
+      var diss = helper.disassemble(code)
+
+      Ok(diss)
     }.getOrElse {
       BadRequest("Missing parameter [code]")
     }

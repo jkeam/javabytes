@@ -7,6 +7,7 @@ import scalax.io._
 class Disassembler {
 
   def disassemble(code:String):String = {
+    val logger = new Logger()
     var error = false
     var message = ""
     //generate UUID
@@ -34,34 +35,30 @@ class Disassembler {
     if (error) return message
 
     //run compiler
-    var compilation = ""
     try {
-      compilation = ("javac tmp/" + id + ".java").!!
+      val compilationCommand = "javac tmp/" + id + ".java"
+      compilationCommand !! logger.log
     }
     catch {
       case e: Exception =>
-       message += "Unable to compile.<br>"
+       message += clean(logger.err)
        error = true
        quietRemoveFile(id)
        return message
     }
 
+    var decomp = "An unknown error has occurred"
     try {
-    var decomp = ("javap -c tmp/" + id).!!
-    //decomp = decomp.replaceAll("Compiled from " + id, "")
-    //decomp = decomp.replaceAll("\u007D", "\u007D\u007D")
-    //decomp = decomp.replaceAll("\u007B", "\u007B\u007B")
-
-    decomp = decomp.replaceAll("\\{", "{{")
-    decomp = decomp.replaceAll("\\}", "}}")
-    decomp = decomp.replaceAll("\"", "'")
-    decomp = decomp.replaceAll("\n", "<br>")
-    decomp = decomp.replaceAll("\t", " ")
-    return decomp.toString()
+      val decompCommand = "javap -c tmp/" + id
+      //decomp = decomp.replaceAll("Compiled from " + id, "")
+      //decomp = decomp.replaceAll("\u007D", "\u007D\u007D")
+      //decomp = decomp.replaceAll("\u007B", "\u007B\u007B")
+      decomp = decompCommand !! logger.log
+      decomp = clean(decomp)
     }
     catch {
       case e: Exception =>
-       message += "Unable to disassemble.\n"
+       message += clean(logger.err)
        error = true
        quietRemoveFile(id)
        return message
@@ -79,8 +76,26 @@ class Disassembler {
     }
 
     if (error) return message
+    else return decomp
+  }
+  
+  def clean(str:StringBuilder): String = {
+    clean(str.toString())
+  }
 
-    return "An unknown error has ocurred"
+  def clean(str:String):String = {
+    var decomp = str.replaceAll("\\{", "{{")
+    decomp = decomp.replaceAll("\\}", "}}")
+    decomp = decomp.replaceAll("\"", "'")
+    decomp = decomp.replaceAll("\n", "<br>")
+    decomp = decomp.replaceAll("\t", " ")
+    decomp = decomp.replaceAll("\u005E", " ")
+    decomp = decomp.replaceAll("\u2038", " ")
+    decomp = decomp.replaceAll("\\^", " ")
+    decomp = decomp.replaceAll("\\s\\s\\s\\s\\s+", "<br>")
+    decomp = decomp.replaceAll("\u001A", "")
+    decomp = decomp.replaceAll("^\\s+", "")
+    decomp
   }
 
   def quietRemoveFile(id:String) {

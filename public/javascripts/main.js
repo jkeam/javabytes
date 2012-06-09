@@ -9,16 +9,15 @@ function Javabytes() {
     $.ajax({
       type: 'POST',
       url: '/',
-      dataType: 'json',
+      dataType: 'text',
       contentType: 'application/json; charset=utf-8',
       data: jsonText,
-      success: function(json) {
-        var code = json.code;
+      success: function(code) {
         code = code.replace(/<br>/g, "\n");
         outputMirror.setValue(code);
       },
-      failure: function(xhr, textStatus, errorThrown) {
-        window.alert('failure: ');
+      error: function(xhr, status, errorThrown) {
+        console.error('Error compiling')
       }
     });
   };
