@@ -5,6 +5,7 @@ import scala.sys.process._
 import scalax.io._
 
 class Disassembler {
+  val tmpDir = "data/"
 
   def disassemble(code:String):String = {
     val logger = new Logger()
@@ -14,8 +15,8 @@ class Disassembler {
     val rawId = "t" + UUID.randomUUID().toString()
     val id = rawId.replaceAll("-", "")
 
-    //create file in tmp/
-    val fw = new FileWriter("tmp/" + id + ".java")
+    //create file in tmpDir
+    val fw = new FileWriter(tmpDir + id + ".java")
 
     //write code out to that file
     try {
@@ -36,7 +37,7 @@ class Disassembler {
 
     //run compiler
     try {
-      val compilationCommand = "javac tmp/" + id + ".java"
+      val compilationCommand = "javac " + tmpDir + id + ".java"
       compilationCommand !! logger.log
     }
     catch {
@@ -49,7 +50,7 @@ class Disassembler {
 
     var decomp = "An unknown error has occurred"
     try {
-      val decompCommand = "javap -c tmp/" + id
+      val decompCommand = "javap -c " + tmpDir + id
       //decomp = decomp.replaceAll("Compiled from " + id, "")
       //decomp = decomp.replaceAll("\u007D", "\u007D\u007D")
       //decomp = decomp.replaceAll("\u007B", "\u007B\u007B")
@@ -100,10 +101,10 @@ class Disassembler {
 
   def quietRemoveFile(id:String) {
     try {
-      val sourceFile = new File("tmp/" + id + ".java")
+      val sourceFile = new File(tmpDir + id + ".java")
       sourceFile.delete()
 
-      val classFile = new File("tmp/" + id + ".class")
+      val classFile = new File(tmpDir + id + ".class")
       classFile.delete()
     }
     catch {
@@ -112,10 +113,10 @@ class Disassembler {
   }
 
   def removeFile(id:String) {
-    val sourceFile = new File("tmp/" + id + ".java")
+    val sourceFile = new File(tmpDir + id + ".java")
     sourceFile.delete()
 
-    val classFile = new File("tmp/" + id + ".class")
+    val classFile = new File(tmpDir + id + ".class")
     classFile.delete()
   }
 
