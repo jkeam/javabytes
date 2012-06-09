@@ -30,6 +30,10 @@ html {
   font-family: Consolas, monaco, monospace;
 }
 
+.code {
+  font-family: Consolas, monaco, monospace;
+}
+
 .console-container .btn {
   width: 95%;
 }
