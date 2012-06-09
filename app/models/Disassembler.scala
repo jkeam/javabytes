@@ -7,6 +7,8 @@ import scalax.io._
 class Disassembler {
 
   def disassemble(code:String):String = {
+    var error = false
+    var message = ""
     //generate UUID
     val rawId = "t" + UUID.randomUUID().toString()
     val id = rawId.replaceAll("-", "")
@@ -20,19 +22,31 @@ class Disassembler {
       fw.write(code)
       fw.write("}}")
       fw.flush()
-    } finally {
+    }
+    catch {
+      case e: Exception =>
+       message += "Unable to create source.<br>"
+       error = true
+    }
+    finally {
       fw.close()
     }
+    if (error) return message
 
     //run compiler
-   /*
-   "javac tmp/Hello.java".!
-    var decomp = "javap -c tmp/Hello".!!
-    var decomps = decomp.split("\n");
-    decomps = decomps.filter(d => !d.matches("Compiled from .*"))
-    */
+    var compilation = ""
+    try {
+      compilation = ("javac tmp/" + id + ".java").!!
+    }
+    catch {
+      case e: Exception =>
+       message += "Unable to compile.<br>"
+       error = true
+       quietRemoveFile(id)
+       return message
+    }
 
-    ("javac tmp/" + id + ".java").!
+    try {
     var decomp = ("javap -c tmp/" + id).!!
     //decomp = decomp.replaceAll("Compiled from " + id, "")
     //decomp = decomp.replaceAll("\u007D", "\u007D\u007D")
@@ -43,18 +57,44 @@ class Disassembler {
     decomp = decomp.replaceAll("\"", "'")
     decomp = decomp.replaceAll("\n", "<br>")
     decomp = decomp.replaceAll("\t", " ")
-
-    //if no errors
-      //run disassembler
-    //else
-      //take output from compiler and send it back
+    return decomp.toString()
+    }
+    catch {
+      case e: Exception =>
+       message += "Unable to disassemble.\n"
+       error = true
+       quietRemoveFile(id)
+       return message
+    }
 
     //remove
-    removeFile(id)
-    return decomp.toString()
+    try {
+      removeFile(id)
+    }
+    catch {
+      case e: Exception =>
+       message += "Unable to cleanup.<br>"
+       error = true
+       return message
+    }
 
+    if (error) return message
+
+    return "An unknown error has ocurred"
   }
 
+  def quietRemoveFile(id:String) {
+    try {
+      val sourceFile = new File("tmp/" + id + ".java")
+      sourceFile.delete()
+
+      val classFile = new File("tmp/" + id + ".class")
+      classFile.delete()
+    }
+    catch {
+      case e: Exception => System.out.println("Couldn't remove file")
+    }
+  }
 
   def removeFile(id:String) {
     val sourceFile = new File("tmp/" + id + ".java")
