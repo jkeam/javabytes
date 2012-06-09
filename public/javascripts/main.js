@@ -3,6 +3,9 @@ function Javabytes() {
   var outputMirror;
 
   this.submitCode= function() {
+    $('#disassemble_button').attr('disabled', 'disabled');
+    outputMirror.setValue("Running...");
+
     var rawText = inputMirror.getValue();
     if (!rawText) return;
     var jsonText = JSON.stringify({"code":rawText});
@@ -12,6 +15,9 @@ function Javabytes() {
       dataType: 'text',
       contentType: 'application/json; charset=utf-8',
       data: jsonText,
+      complete: function(xhr, status) {
+        $('#disassemble_button').removeAttr('disabled');
+      },
       success: function(code) {
         code = code.replace(/<br>/g, "\n");
         outputMirror.setValue(code);
