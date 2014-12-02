@@ -1,10 +1,10 @@
 name := """app"""
 
-version := "2.0-SNAPSHOT"
+version := "3.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.4"
 
 libraryDependencies ++= Seq(
   jdbc,

@@ -1,4 +1,4 @@
-function Javabytes() {
+function Codebytes() {
   var inputMirror;
   var outputMirror;
 
@@ -33,4 +33,4 @@ function Javabytes() {
     outputMirror = CodeMirror.fromTextArea($("#outputTextArea").get(0), {lineNumbers:true, readOnly :true});
   };
 }
-var javabytes = new Javabytes();
+var codebytes = new Codebytes();

@@ -11,12 +11,16 @@ html {
   vertical-align: middle;
 }
 
+#banner {
+  min-height: 0;
+}
+
 #container {
   padding:10px;
 }
 
-.messages{
-  height:75px;
+.page-header {
+  margin: 5px 0 50px;
 }
 
 .console-container {
@@ -35,7 +39,7 @@ html {
 }
 
 .console-container .btn {
-  width: 95%;
+  width: 100%;
 }
 
 .action .btn {
@@ -145,4 +149,8 @@ a.btn{
   -webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
+}
+
+img.github {
+  z-index: 1031;
 }

@@ -1,56 +1,34 @@
 @(messages: String)
 
 @main("Javabytes") {
-    <!--
-     message was Array[String]
-    @for( message <- messages) {
-      @message<br/>
-    }
-    -->
-</head>
-<body>
-
-<div class="banner">
-Javabytes
-</div>
 
 <div id="container">
-
-<div class="intro">
-Welcome to Javabytes, a disassembler for your java code.  Inspired by a project by Matt Godbold called <a href="https://github.com/mattgodbolt/gcc-explorer">GCC Explorer</a>. 
-<br/>
-Enter some arbitrary java code and this application will do a few things:
-<br/>
-<ol>
-  <li>Generate some random class to hold your code.</li>
-  <li>Put all of the code you entered into a <span class="code">public static void test()</span> method.</li>
-</ol>
-This will make more sense once you see the disassembled code.
-<div class="messages" >
-
-</div>
-
-<div class="action">
-</div>
-<div id="main">
-  <div class="console-container">
-    Java Code
-    <div class="console">
-      <textarea id="inputTextArea">System.out.println("hi");</textarea>
-    </div>
-    <a id="disassemble_button" href="#" class="btn" onClick="javabytes.submitCode(); return false;">Disassemble</a>
-  </div>
-  <div class="console-container">
-    Disassembled Code
-    <div class="console">
-      <textarea id="outputTextArea"></textarea>
+  <div class='container'>
+    <div class="page-header" id='banner'>
+      <div class="row">
+        <div class="col-lg-8 col-md-7 col-sm-6">
+          <h1>Javabytes</h1>
+          <p class="lead">Java Dissassembler</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
+  <div id="main">
+    <div class="console-container">
+      Java Code
+      <div class="console">
+        <textarea id="inputTextArea">System.out.println("hi");</textarea>
+      </div>
+      <a id="disassemble_button" href="#" class="btn" onClick="codebytes.submitCode(); return false;">Disassemble</a>
+    </div>
+    <div class="console-container">
+      Disassembled Code
+      <div class="console">
+        <textarea id="outputTextArea"></textarea>
+      </div>
+    </div>
+  </div>
 
 </div>
-
-</body>
-</html>
-
 }
