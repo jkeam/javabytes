@@ -1,12 +1,14 @@
-JavaBytes
+Javabytes
 =====================================
 
 Welcome to Javabytes, a disassembler for your java code. Inspired by a project by Matt Godbold called [GCC Explorer](https://github.com/mattgodbolt/gcc-explorer).
 Enter some arbitrary java code and this application will do a few things: 
 
-1. Generate some random class to hold your code.
+1. Generate a random class to hold your code.
 2. Put all of the code you entered into a public static void test() method.
 
-This will make more sense once you see the disassembled code.
+This is done solely out of convenience so that you don't have to write boilerplate code everytime.
 
-An example can be found [here](http://javabytes.herokuapp.com/).
+Currently only supports [OpenJDK8](http://openjdk.java.net/projects/jdk8/)
+
+The demo site can be found [here](http://javabytes.io/).
