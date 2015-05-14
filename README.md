@@ -2,7 +2,7 @@ Javabytes
 =====================================
 [![Build Status](https://travis-ci.org/jkeam/javabytes.svg?branch=master)](https://travis-ci.org/jkeam/javabytes)
 
-Welcome to Javabytes, a disassembler for your java code. Inspired by a project by Matt Godbold called [GCC Explorer](https://github.com/mattgodbolt/gcc-explorer).
+Welcome to Javabytes, a disassembler for your java code. Inspired by a project by Matt Godbolt called [GCC Explorer](https://github.com/mattgodbolt/gcc-explorer).
 Enter some arbitrary java code and this application will do a few things: 
 
 1. Generate a random class to hold your code.
