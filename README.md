@@ -13,3 +13,17 @@ This is done solely out of convenience so that you don't have to write boilerpla
 Currently only supports [OpenJDK8](http://openjdk.java.net/projects/jdk8/)
 
 The demo site can be found [here](http://javabytes.io/).
+
+## Development
+
+### Prereq
+1.  Java 8
+2.  Play
+`brew install typesafe-activator`
+
+### Starting the Server
+1.  Config app_secret and replace value in application.conf
+2.  Start activator shell
+`activator`
+3.  Run app
+`run`
