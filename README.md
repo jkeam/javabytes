@@ -6,9 +6,9 @@ Welcome to Javabytes, a disassembler for your java code. Inspired by a project b
 
 Enter some Java and this application will show you the JVM bytecode that is generated.
 
-Currently only supports [OpenJDK8](http://openjdk.java.net/projects/jdk8/)
+Currently only supports [OpenJDK8](http://openjdk.java.net/projects/jdk8/).
 
-The demo site can be found [here](http://javabytes.io/).
+The demo site can be found here at [javabytes.io](http://javabytes.io/).
 
 ## Development
 
