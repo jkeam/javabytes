@@ -7,7 +7,7 @@ import scala.sys.process._
 import scalax.io._
 
 class Disassembler {
-  val tmpDir = "./data/"
+  val tmpDir = "/tmp/javabytes/"
 
   def disassemble(code:String):String = {
     val logger = new Logger()
