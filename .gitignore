@@ -8,3 +8,4 @@ dist
 data/*.java
 data/*.class
 .DS_Store
+ignore

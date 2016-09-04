@@ -1,6 +1,8 @@
 package models
 import java.util.UUID
 import java.io._
+import java.nio.file._
+import java.util.regex._
 import scala.sys.process._
 import scalax.io._
 
@@ -11,18 +13,32 @@ class Disassembler {
     val logger = new Logger()
     var error = false
     var message = ""
+
     //generate UUID
     val rawId = "t" + UUID.randomUUID().toString()
-    val id = rawId.replaceAll("-", "")
+    val id = rawId.replaceAll("-", "").replaceAll("/", "").replaceAll("\\\\", "").replaceAll(":", "")
 
-    //create file in tmpDir
-    val fw = new FileWriter(tmpDir + id + ".java")
+    //create tmpDir
+    val userTmpDirName = tmpDir + id
+    val userTmpDir = createDir(userTmpDirName)
+
+    //try and extract name of class
+    val className = extractClassname(code)
+    if (className == "" || className == null) {
+      message += clean(logger.err, userTmpDirName)
+      error = true
+      removeDir(userTmpDir)
+      return message
+    }
+
+    //create tmp file
+    val javaFilename = userTmpDirName + "/" + className + ".java"
+    val classFilename = userTmpDirName + "/" + className + ".class"
+    val fw = new FileWriter(javaFilename)
 
     //write code out to that file
     try {
-      fw.write("public class " + id + " { public static void test(){")
       fw.write(code)
-      fw.write("}}")
       fw.flush()
     }
     catch {
@@ -37,37 +53,35 @@ class Disassembler {
 
     //run compiler
     try {
-      val compilationCommand = "javac " + tmpDir + id + ".java"
+      val compilationCommand = "javac " + javaFilename
       compilationCommand !! logger.log
     }
     catch {
       case e: Exception =>
-       message += clean(logger.err)
+       message += clean(logger.err, userTmpDirName)
        error = true
-       quietRemoveFile(id)
+       quietRemoveFile(javaFilename, classFilename, userTmpDir)
        return message
     }
 
+    //dissassemble
     var decomp = "An unknown error has occurred"
     try {
-      val decompCommand = "javap -c " + tmpDir + id
-      //decomp = decomp.replaceAll("Compiled from " + id, "")
-      //decomp = decomp.replaceAll("\u007D", "\u007D\u007D")
-      //decomp = decomp.replaceAll("\u007B", "\u007B\u007B")
+      val decompCommand = "javap -c " + classFilename
       decomp = decompCommand !! logger.log
-      decomp = clean(decomp)
+      decomp = clean(decomp, userTmpDirName)
     }
     catch {
       case e: Exception =>
-       message += clean(logger.err)
+       message += clean(logger.err, userTmpDirName)
        error = true
-       quietRemoveFile(id)
+       quietRemoveFile(javaFilename, classFilename, userTmpDir)
        return message
     }
 
-    //remove
+    //remove all junk files created
     try {
-      removeFile(id)
+      removeFile(javaFilename, classFilename, userTmpDir)
     }
     catch {
       case e: Exception =>
@@ -79,13 +93,23 @@ class Disassembler {
     if (error) return message
     else return decomp
   }
-  
-  def clean(str:StringBuilder): String = {
-    clean(str.toString())
+
+  def createDir(str:String):Path = {
+    val folderPath = Paths.get(str)
+    Files.createDirectories(folderPath)
   }
 
-  def clean(str:String):String = {
+  def removeDir(userTmpDir:Path) = {
+    Files.delete(userTmpDir)
+  }
+  
+  def clean(str:StringBuilder, dirPrefix:String):String = {
+    clean(str.toString(), dirPrefix)
+  }
+
+  def clean(str:String, dirPrefix:String):String = {
     var decomp = str.replaceAll("\\{", "{{")
+    decomp = decomp.replaceAll(dirPrefix+ "/", "")
     decomp = decomp.replaceAll("\\}", "}}")
     decomp = decomp.replaceAll("\"", "'")
     decomp = decomp.replaceAll("\n", "<br>")
@@ -99,25 +123,39 @@ class Disassembler {
     decomp
   }
 
-  def quietRemoveFile(id:String) {
+  def quietRemoveFile(filename:String, classname:String, userTmpDir:Path) = {
     try {
-      val sourceFile = new File(tmpDir + id + ".java")
+      val sourceFile = new File(filename)
       sourceFile.delete()
 
-      val classFile = new File(tmpDir + id + ".class")
+      val classFile = new File(classname)
       classFile.delete()
+
+      Files.delete(userTmpDir)
     }
     catch {
       case e: Exception => System.out.println("Couldn't remove file")
     }
   }
 
-  def removeFile(id:String) {
-    val sourceFile = new File(tmpDir + id + ".java")
+  def removeFile(filename:String, classname:String, userTmpDir:Path) = {
+    val sourceFile = new File(filename)
     sourceFile.delete()
 
-    val classFile = new File(tmpDir + id + ".class")
+    val classFile = new File(classname)
     classFile.delete()
+
+    Files.delete(userTmpDir)
   }
 
+  def extractClassname(code:String):String = {
+    val pattern = Pattern.compile("\\s*(public|private)\\s+class\\s+(\\w+)\\s+((extends\\s+\\w+)|(implements\\s+\\w+( ,\\w+)*))?\\s*\\{");
+    val m = pattern.matcher(code)
+
+    if (m.find()) {
+      m.group(2)
+    } else {
+      null
+    }
+  }
 }

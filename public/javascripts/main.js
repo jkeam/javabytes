@@ -29,8 +29,19 @@ function Codebytes() {
   };
  
   this.onReady= function() {
-    inputMirror = CodeMirror.fromTextArea($("#inputTextArea").get(0), {lineNumbers:true});
-    outputMirror = CodeMirror.fromTextArea($("#outputTextArea").get(0), {lineNumbers:true, readOnly :true});
+    inputMirror = CodeMirror.fromTextArea($("#inputTextArea").get(0), {
+      lineNumbers: true,
+      matchBrackets: true,
+      tabSize: 2,
+      mode: "text/x-java"
+    });
+    outputMirror = CodeMirror.fromTextArea($("#outputTextArea").get(0), {
+      lineNumbers: true,
+      readOnly: true,
+      matchBrackets: true,
+      tabSize: 2,
+      mode: "text/x-java"
+    });
   };
 }
 var codebytes = new Codebytes();
