@@ -8,15 +8,13 @@ import models._
 object Application extends Controller {
   
   def index = Action {
-    //Ok(views.html.index(decomps))
-    Ok(views.html.index("hi"))
+    Ok(views.html.index(""))
   }
 
   def submitCode = Action(parse.json) { request =>
     (request.body \ "code").asOpt[String].map { code =>
       val helper = new Disassembler()
-      var diss = helper.disassemble(code)
-
+      val diss = helper.disassemble(code)
       Ok(diss)
     }.getOrElse {
       BadRequest("Missing parameter [code]")
