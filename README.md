@@ -15,17 +15,25 @@ The demo site can be found [here](http://javabytes.io/).
 ### Prereq
 1.  Java 8
 2.  Play
-  `brew install typesafe-activator`
+
+  ```
+  brew install typesafe-activator
+  ```
 3.  Create /tmp/javabytes directory
-  `mkdir -p /tmp/javabytes`
+
+  ```
+  mkdir -p /tmp/javabytes
+  ```
 
 ### Starting the Server
 1.  Config app_secret and replace value in application.conf
 2.  Start activator shell
-`activator`
+
+  ```
+  activator
+  ```
 3.  Run app
-`run`
 
-or to debug
-
-`activator -jvm-debug 9999 run`
+  ```
+  run
+  ```
