@@ -14,19 +14,20 @@ The demo site can be found [here](http://javabytes.io/).
 
 ### Prereq
 1.  Java 8
-2.  Play
+2.  Play 2.3.1 or later
 
   ```
   brew install typesafe-activator
   ```
-3.  Create /tmp/javabytes directory
+3.  Create tmp directory
 
   ```
   mkdir -p /tmp/javabytes
   ```
 
 ### Starting the Server
-1.  Config app_secret and replace value in application.conf
+1.  Config app_secret and replace value in application.conf.  [Read here for more information on how to do that.](https://www.playframework.com/documentation/2.5.x/ApplicationSecret).
+
 2.  Start activator shell
 
   ```
