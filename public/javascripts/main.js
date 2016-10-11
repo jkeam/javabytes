@@ -27,8 +27,7 @@ function Codebytes() {
       outputMirror.setValue(code);
     })
     .fail(function(xhr, status, errorThrown) {
-      debugger;
-      console.error('Error compiling');
+      console.error('Error');
     });
   };
  
