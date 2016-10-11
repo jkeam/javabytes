@@ -3,12 +3,16 @@ function Codebytes() {
   var outputMirror;
 
   this.submitCode = function() {
+    var rawText = inputMirror.getValue();
+    var version = $('#javaVersion').val();
+    if (!rawText || !version) {
+      outputMirror.setValue("Please make sure code and version are not blank.");
+      return;
+    }
+
     $('#disassemble_button').attr('disabled', 'disabled');
     outputMirror.setValue("Running...");
 
-    var rawText = inputMirror.getValue();
-    var version = $('#javaVersion').val();
-    if (!rawText || !version) return;
     $.ajax({
       type: 'POST',
       url: '/',
