@@ -2,29 +2,33 @@ function Codebytes() {
   var inputMirror;
   var outputMirror;
 
-  this.submitCode= function() {
+  this.submitCode = function() {
     $('#disassemble_button').attr('disabled', 'disabled');
     outputMirror.setValue("Running...");
 
     var rawText = inputMirror.getValue();
-    if (!rawText) return;
-    var jsonText = JSON.stringify({"code":rawText});
+    var version = $('#javaVersion').val();
+    if (!rawText || !version) return;
     $.ajax({
       type: 'POST',
       url: '/',
+      data: JSON.stringify({
+        "code": rawText,
+        "version": version
+      }),
       dataType: 'text',
-      contentType: 'application/json; charset=utf-8',
-      data: jsonText,
-      complete: function(xhr, status) {
-        $('#disassemble_button').removeAttr('disabled');
-      },
-      success: function(code) {
-        code = code.replace(/<br>/g, "\n");
-        outputMirror.setValue(code);
-      },
-      error: function(xhr, status, errorThrown) {
-        console.error('Error compiling')
-      }
+      contentType: 'application/json; charset=utf-8'
+    })
+    .always(function(xhr, status) {
+      $('#disassemble_button').removeAttr('disabled');
+    })
+    .done(function(code) {
+      code = code.replace(/<br>/g, "\n");
+      outputMirror.setValue(code);
+    })
+    .fail(function(xhr, status, errorThrown) {
+      debugger;
+      console.error('Error compiling');
     });
   };
  

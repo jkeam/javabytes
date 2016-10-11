@@ -15,8 +15,19 @@
   </div>
 
   <div id="main">
+    <div class="console-container-full">
+      <div class="form-group">
+        <label for="javaVersion" class="control-label">Java Version</label>
+        <select class="form-control" id="javaVersion">
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+        </select>
+      </div>
+    </div>
     <div class="console-container">
-      Java Code
+      <label for="inputTextArea" class="control-label">Java Code</label>
       <div class="console">
         <textarea id="inputTextArea">public class HelloWorld {
 
@@ -31,7 +42,7 @@
       <a id="disassemble_button" href="#" class="btn" onClick="codebytes.submitCode(); return false;">Disassemble</a>
     </div>
     <div class="console-container">
-      Disassembled Code
+      <label for="outputTextArea" class="control-label">Disassembled Code</label>
       <div class="console">
         <textarea id="outputTextArea"></textarea>
       </div>
