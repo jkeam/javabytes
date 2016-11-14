@@ -12,7 +12,7 @@ object Application extends Controller {
     (JsPath \ "code").read[String] and
     (JsPath \ "version").read[String]
   )(Code.apply _)
-  
+
   def index = Action {
     Ok(views.html.index(""))
   }
@@ -26,11 +26,11 @@ object Application extends Controller {
         BadRequest(Json.obj("status" ->"ERROR", "message" -> JsError.toFlatJson(errors)))
       },
       code => {
-        val helper = new Disassembler()
-        val diss = helper.disassemble(code.code)
+        val helper = new DisassemblerService()
+        val diss = helper.disassemble(code.version, code.code)
         Ok(diss)
       }
     )
   }
-  
+
 }
