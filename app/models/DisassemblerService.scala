@@ -11,7 +11,9 @@ class DisassemblerService {
 
     try {
       val url = play.Play.application.configuration.getString(s"dis.api.${version}")
+      Logger.debug(s"url: ${url}")
       val response = Json.parse(Http(url).postForm(Seq("code" -> code)).asString.body)
+      Logger.debug(s"response: ${response}")
 
       (response \ "result").asOpt[String] match {
         case Some(data) => decomp = data
