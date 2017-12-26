@@ -4,11 +4,7 @@ function Codebytes() {
 
   this.submitCode = function() {
     var rawText = inputMirror.getValue();
-    var version = $('#javaVersion').val();
-    if (!rawText || !version) {
-      outputMirror.setValue("Please make sure code and version are not blank.");
-      return;
-    }
+    if (!rawText) return;
 
     $('#disassemble_button').attr('disabled', 'disabled');
     outputMirror.setValue("Running...");
@@ -17,8 +13,7 @@ function Codebytes() {
       type: 'POST',
       url: '/',
       data: JSON.stringify({
-        "code": rawText,
-        "version": version
+        "code": rawText
       }),
       dataType: 'text',
       contentType: 'application/json; charset=utf-8'
@@ -34,7 +29,7 @@ function Codebytes() {
       console.error('Error');
     });
   };
- 
+
   this.onReady= function() {
     inputMirror = CodeMirror.fromTextArea($("#inputTextArea").get(0), {
       lineNumbers: true,

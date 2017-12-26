@@ -6,7 +6,7 @@ Welcome to Javabytes, a disassembler for your java code. Inspired by a project b
 
 Enter some Java and this application will show you the JVM bytecode that is generated.
 
-Currently only supports [OpenJDK9](http://openjdk.java.net/projects/jdk9/), [OpenJDK8](http://openjdk.java.net/projects/jdk8/), [OpenJDK7](http://openjdk.java.net/projects/jdk7/), and [OpenJDK6](http://openjdk.java.net/projects/jdk6/).
+Currently only supports [OpenJDK8](http://openjdk.java.net/projects/jdk8/).
 
 The demo site can be found here at [javabytes.io](http://javabytes.io/).
 
@@ -14,10 +14,14 @@ The demo site can be found here at [javabytes.io](http://javabytes.io/).
 
 ### Prereq
 1.  Java 8
-2.  Play 2.3.1 or later
+2.  Scala 1.10
+3.  Play 2.3.1
+4.  SBT 0.13
 
   ```
   brew install typesafe-activator
+  # also create tmp directory
+  mkdir -p /tmp/javabytes
   ```
 
 ### Starting the Server
