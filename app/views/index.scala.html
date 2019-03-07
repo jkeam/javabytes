@@ -1,6 +1,6 @@
-@(messages: String)
+@(messages: String)(implicit assetsFinder: AssetsFinder)
 
-@main("Javabytes") {
+@main("Javabytes", assetsFinder) {
 
 <div id="container">
   <div class='container'>
