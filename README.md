@@ -17,6 +17,8 @@ The demo site can be found here at [javabytes.io](http://javabytes.io/).
 2.  Scala 2.11.x
 3.  Play 2.7
 4.  SBT 1.2.x
+5.  Generate secret [Link](https://www.playframework.com/documentation/2.7.x/ApplicationSecret)
+6.  Create tmp directory
 
   ```
   # create tmp directory
