@@ -14,26 +14,19 @@ The demo site can be found here at [javabytes.io](http://javabytes.io/).
 
 ### Prereq
 1.  Java 8
-2.  Scala 1.10
-3.  Play 2.3.1
-4.  SBT 0.13
+2.  Scala 2.11.x
+3.  Play 2.7
+4.  SBT 1.2.x
 
   ```
-  brew install typesafe-activator
-  # also create tmp directory
+  # create tmp directory
   mkdir -p /tmp/javabytes
   ```
 
-### Starting the Server
-1.  Config app_secret and replace value in application.conf.  [Read here for more information on how to do that.](https://www.playframework.com/documentation/2.5.x/ApplicationSecret).
-
-2.  Start activator shell
-
-  ```
-  activator
-  ```
-3.  Run app
+### Setup
+1.  Check out this project
+2.  Run server
 
   ```
-  run
+  sbt run
   ```

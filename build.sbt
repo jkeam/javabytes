@@ -5,8 +5,6 @@ version := "4.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 resolvers += Resolver.sonatypeRepo("snapshots")
-resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
-resolvers += "Maven" at "https://mvnrepository.com/artifact/"
 
 scalaVersion := "2.11.12"
 
