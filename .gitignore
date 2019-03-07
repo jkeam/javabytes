@@ -9,3 +9,5 @@ data/*.java
 data/*.class
 .DS_Store
 ignore
+.cache
+.idea
